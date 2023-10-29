@@ -130,3 +130,7 @@ class TestFileStorage(unittest.TestCase):
         count_model = storage.count(MyModel)
         assert count_all == 2
         assert count_model == 2
+    def test_filestorage_get_nonexistent():
+        storage = FileStorage()
+        retrieved_object = storage.get(MyModel, "nonexistent_id")
+        assert retrieved_object is None
