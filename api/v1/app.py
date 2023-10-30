@@ -20,6 +20,7 @@ def teardown(exception):
     """ Closes the DB """
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(exception):
     """ Returns a JSON formatted 404 status code response """
