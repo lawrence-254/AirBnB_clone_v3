@@ -71,18 +71,20 @@ class FileStorage:
 
     def get(self, cls, id):
         """A get function for fetching for objects in a database"""
-        if cls and id:
-            obj_key = "{}.{}".format(cls.__name__, id)
-            obj_dict = self.all()
-            return obj_dict.get(obj_key, None)
-        return None
+        if cls is None or cls not in classes or id is None or type(id) is not \
+                str:
+            return None
+        return (self.__objects.get(cls + '.' + id, None))
 
     def count(self, cls=None):
         """Counts the number of objects in a database"""
-        obj_dict = self.all()
-        if cls:
-            count = sum(1 for obj_key in obj_dict if obj_key.split(
-                ".")[0] == cls.__name__)
+        count = 0
+        if cls is not None:
+            for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    count += 1
         else:
-            count = len(obj_dict)
+            for key, value in self.__objects.items():
+                count += 1
+
         return count
